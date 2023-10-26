@@ -39,7 +39,7 @@ impl Game {
     }
 }
 
-// 選択している位置を中心に、マスを十字に裏返す
+// 選択している位置を中心にマスを十字に裏返す
 fn turn_over(Game { pos, field }: &mut Game) {
     let y = pos.y;
     let x = pos.x;
@@ -53,7 +53,7 @@ fn turn_over(Game { pos, field }: &mut Game) {
     }
 }
 
-// 全てのマスが表を向いていたらtrue
+// 全てのマスが表がならtrue、そうでないならfalse
 fn all_front_check(Game { field, .. }: &Game) -> bool {
     for check in field {
         for i in 0..check.len() {
@@ -130,10 +130,12 @@ fn main() {
             _ => (),
         }
 
+        // 全て表ならループを終了する
         if all_front_check(&game) {
             break;
         }
     }
 
+    // カーソルを表示する
     println!("\x1b[?25h");
 }
