@@ -1,4 +1,5 @@
 use getch_rs::{Getch, Key};
+use std::time::Instant;
 
 const BACK: Option<bool> = Some(false); // 裏
 const FRONT: Option<bool> = Some(true); // 表
@@ -88,11 +89,12 @@ fn draw(Game { pos, field }: &Game) {
 
 fn main() {
     let mut game = Game::new();
-
     let key = Getch::new();
 
     // カーソルの削除
     print!("\x1b[?25l");
+
+    let start = Instant::now();
 
     // メインループ
     loop {
@@ -136,6 +138,18 @@ fn main() {
         }
     }
 
+    let end = Instant::now();
+    let elapsed = end.duration_since(start);
+    let minutes = elapsed.as_secs() / 60;
+    let seconds = elapsed.as_secs() % 60;
+
+    println!("クリア！");
+    println!("経過時間は{}分{}秒です", minutes, seconds);
+
+    quit()
+}
+
+fn quit() {
     // カーソルを表示する
     println!("\x1b[?25h");
 }
